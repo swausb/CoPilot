@@ -1,6 +1,7 @@
 package de.swausb.copilot;
 
 import java.util.Arrays;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 
 import javax.security.auth.login.LoginException;
@@ -78,6 +79,11 @@ public class Start {
 
         commandManager.registerCommand(new PlayCommand("play", "play <Songlink>", "Plays a given song from youtube or spotify", "First-Officer"));
         commandManager.registerCommand(new StopCommand("stop", "stop Song", "stops a playing song", "First-Officer"));
+
+        Scanner scanner = new Scanner(System.in);
+        if (scanner.nextLine().equalsIgnoreCase("stop")) {
+            jda.shutdownNow();
+        }
     }
 
 

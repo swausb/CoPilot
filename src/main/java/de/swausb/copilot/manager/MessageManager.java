@@ -65,4 +65,15 @@ public class MessageManager {
         builder.setFooter("CoPilot-Bot - Copyright © swausb");
         textChannel.sendMessage(builder.build()).queue(exitMessage -> exitMessage.addReaction("❌").queue());
     }
+
+    public void printErrorStopCommand (Member commandSender, TextChannel textChannel) {
+        EmbedBuilder builder = new EmbedBuilder();
+        builder.setAuthor("CoPilot - " + commandSender.getEffectiveName());
+        builder.setThumbnail("https://raw.githubusercontent.com/swausb/CoPilot/master/images/CoPilot.jpg");
+        builder.setColor(Color.red);
+        builder.setTitle("Fehler [ERROR 004]");
+        builder.setDescription("Aktuell spielt kein Song!");
+        builder.setFooter("CoPilot-Bot - Copyright © swausb");
+        textChannel.sendMessage(builder.build()).queue(exitMessage -> exitMessage.addReaction("❌").queue());
+    }
 }

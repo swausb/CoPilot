@@ -10,13 +10,13 @@ import de.swausb.copilot.Start;
 import de.swausb.copilot.music.AudioLoadResult;
 import de.swausb.copilot.music.MusicController;
 import de.swausb.copilot.utils.EmbedMessage;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
 import net.dv8tion.jda.api.managers.AudioManager;
 
-import java.awt.*;
 
 public class PlayCommand extends ICommand {
 
@@ -54,7 +54,10 @@ public class PlayCommand extends ICommand {
                             @Override
                             public void trackLoaded(AudioTrack track) {
                                 super.trackLoaded(track);
-                                textChannel.sendMessage(new EmbedMessage("Now playing [" + commandSender.getEffectiveName() + "]", "Co-Pilot", track.getInfo().title, "", null).build()).queue();
+                                String trackTitle = track.getInfo().title;
+                                String embedTitle = "Link";
+                                EmbedBuilder messageEmbed = new EmbedMessage("Now playing [" + embedTitle + "]", "Co-Pilot - " + commandSender.getEffectiveName(), trackTitle, null, null).raw(track);
+                                textChannel.sendMessage(messageEmbed.build()).queue(message1 -> message1.addReaction("U+1F3B6").queue());
                             }
 
                             @Override
@@ -79,7 +82,7 @@ public class PlayCommand extends ICommand {
                             @Override
                             public void trackLoaded(AudioTrack track) {
                                 super.trackLoaded(track);
-                                textChannel.sendMessage("Ich spiele nun `" + track.getInfo().title + "` im Sprachkanal: " + vc.getName()).queue();
+                                textChannel.sendMessage("Ich spiele nun `" + track.getSourceManager() + "` im Sprachkanal: " + vc.getName()).queue();
                             }
 
                             @Override

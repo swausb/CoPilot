@@ -48,7 +48,11 @@ public class GuildMessageReceivedListener extends ListenerAdapter {
 
                 //Wir rufen die Methode onCommand von ICommand.java auf, die quasi dann ausgeführt wird, wenn ein User das Kommando im Textkanal eingegeben hat
 
-                iCommand.onCommand(event.getMember(), txtChannel, message, arguments);
+                if (iCommand.getRoles().length > 0) {
+                    iCommand.onCommand(event.getMember(), txtChannel, message, arguments);
+                } else {
+                    iCommand.onCommand(event.getMember(), txtChannel, message, arguments);
+                }
             } else {
                 Start.getInstance().getMessageManager().printCommandNotFoundMessage(event.getMember(), txtChannel);
             }

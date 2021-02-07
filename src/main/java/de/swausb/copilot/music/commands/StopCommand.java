@@ -1,13 +1,8 @@
 package de.swausb.copilot.music.commands;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
-import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
-import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
-import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
-import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import de.swausb.copilot.ICommand;
 import de.swausb.copilot.Start;
-import de.swausb.copilot.music.AudioLoadResult;
 import de.swausb.copilot.music.MusicController;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -31,13 +26,21 @@ public class StopCommand extends ICommand {
             GuildVoiceState gvs;
             if ((gvs = commandSender.getVoiceState()) != null) {
                 VoiceChannel vc;
+                // Prüfen, ob der Bot im Channel ist
                 if ((vc = gvs.getChannel()) != null) {
                     MusicController controller = Start.getInstance().playerManager.getController(vc.getGuild().getIdLong());
-                    AudioManager manager = vc.getGuild().getAudioManager();
-                    AudioPlayer player = controller.getPlayer();
+                    // Prüfen, ob der Bot aktuell Musik spielt
+                    if (controller.getPlayer().getPlayingTrack() != null) {
+                        AudioManager manager = vc.getGuild().getAudioManager();
+                        AudioPlayer player = controller.getPlayer();
 
-                    player.stopTrack();
-                    message.addReaction("U+1F44C").queue();
+                        player.stopTrack();
+                        message.addReaction("U+1F44C").queue();
+                    } else {
+                        Start.getInstance().getMessageManager().printErrorStopCommand(commandSender, textChannel);
+                    }
+                } else {
+                    Start.getInstance().getMessageManager().printErrorVoiceChannel(commandSender, textChannel);
                 }
             }
         }
