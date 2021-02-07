@@ -17,6 +17,7 @@ import de.swausb.copilot.manager.CommandManager;
 import de.swausb.copilot.manager.MessageManager;
 import de.swausb.copilot.music.PlayerManager;
 import de.swausb.copilot.music.commands.PlayCommand;
+import de.swausb.copilot.music.commands.StopCommand;
 import de.swausb.copilot.utils.Property;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -76,6 +77,7 @@ public class Start {
         audioPlayerManager.getConfiguration().setFilterHotSwapEnabled(true);
 
         commandManager.registerCommand(new PlayCommand("play", "play <Songlink>", "Plays a given song from youtube or spotify", "First-Officer"));
+        commandManager.registerCommand(new StopCommand("stop", "stop Song", "stops a playing song", "First-Officer"));
     }
 
 

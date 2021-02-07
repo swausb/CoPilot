@@ -1,9 +1,20 @@
 package de.swausb.copilot.music.commands;
 
+import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
+import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
+import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
+import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
+import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import de.swausb.copilot.ICommand;
-import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.TextChannel;
+import de.swausb.copilot.Start;
+import de.swausb.copilot.music.AudioLoadResult;
+import de.swausb.copilot.music.MusicController;
+import de.swausb.copilot.utils.EmbedMessage;
+import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.entities.VoiceChannel;
+import net.dv8tion.jda.api.entities.GuildVoiceState;
+import net.dv8tion.jda.api.managers.AudioManager;
 
 import java.awt.*;
 
@@ -11,20 +22,90 @@ public class PlayCommand extends ICommand {
 
     public PlayCommand(String name, String usage, String description, String... roles) {
         super(name, usage, description, roles);
+
+    }
+
+    public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
+        TextChannel txtChannel = event.getChannel();
+        User user = event.getAuthor();
+        Message message = event.getMessage();
     }
 
     @Override
-    public void onCommand(Member commandSender, TextChannel textChannel, String[] args) {
-        if (args.length == 2) {
+    public void onCommand(Member commandSender, TextChannel textChannel, Message message, String[] args) {
+        if (args.length >= 2) {
+            GuildVoiceState gvs;
+            if ((gvs = commandSender.getVoiceState()) != null) {
+                VoiceChannel vc;
+                if ((vc = gvs.getChannel()) != null) {
+                    MusicController controller = Start.getInstance().playerManager.getController(vc.getGuild().getIdLong());
+                    AudioPlayer player = controller.getPlayer();
+                    AudioPlayerManager apm = Start.getInstance().audioPlayerManager;
+                    AudioManager manager = vc.getGuild().getAudioManager();
+                    manager.openAudioConnection(vc);
 
+                    if (args.length == 2) {
+                        String url = args[1];
+
+                        if (!url.startsWith("http")) {
+                            url = "ytsearch: " + url;
+                        }
+                        apm.loadItem(url, new AudioLoadResult(controller, url) {
+                            @Override
+                            public void trackLoaded(AudioTrack track) {
+                                super.trackLoaded(track);
+                                textChannel.sendMessage(new EmbedMessage("Now playing [" + commandSender.getEffectiveName() + "]", "Co-Pilot", track.getInfo().title, "", null).build()).queue();
+                            }
+
+                            @Override
+                            public void noMatches() {
+                                textChannel.sendMessage("Ich habe kein Lied gefunden.").queue();
+
+                            }
+
+                            @Override
+                            public void loadFailed(FriendlyException e) {
+                                textChannel.sendMessage("lol kaputt").queue();
+                            }
+                        });
+                    } else {
+                        StringBuilder strBuilder = new StringBuilder();
+                        for (int i = 1; i < args.length; i++) {
+                            strBuilder.append(args[i]).append(" ");
+                        }
+
+                        String url = "ytsearch: " + strBuilder.toString();
+                        apm.loadItem(url, new AudioLoadResult(controller, url) {
+                            @Override
+                            public void trackLoaded(AudioTrack track) {
+                                super.trackLoaded(track);
+                                textChannel.sendMessage("Ich spiele nun `" + track.getInfo().title + "` im Sprachkanal: " + vc.getName()).queue();
+                            }
+
+                            @Override
+                            public void noMatches() {
+                                textChannel.sendMessage("Ich habe kein Lied gefunden.").queue();
+                            }
+
+                            @Override
+                            public void loadFailed(FriendlyException e) {
+                                textChannel.sendMessage("lol kaputt").queue();
+                            }
+
+                            @Override
+                            public void playlistLoaded(AudioPlaylist audioPlaylist) {
+                                textChannel.sendMessage("lol").queue();
+                            }
+                        });
+                    }
+                } else {
+                    Start.getInstance().getMessageManager().printErrorVoiceChannel(commandSender, textChannel);
+                }
+            } else {
+                Start.getInstance().getMessageManager().printErrorVoiceChannel(commandSender, textChannel);
+            }
         } else {
-            EmbedBuilder builder = new EmbedBuilder();
-            builder.setAuthor("CoPilot");
-            builder.setThumbnail("")
-            builder.setColor(Color.red);
-            builder.setDescription("Bitte benutze .play wenn du Musik abspielen möchtest!");
-            builder.setFooter("CoPilot-Bot - Copyright © swausb");
-            textChannel.sendMessage(builder.build()).queue();
+            Start.getInstance().getMessageManager().printErrorPlayCommand(commandSender, textChannel);
         }
     }
 }

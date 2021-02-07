@@ -35,7 +35,34 @@ public class MessageManager {
         textChannel.sendMessage(builder.build()).queue(message -> message.addReaction("👋").queue());
     }
 
-    public void printCommandNotFoundMessage (String channelID, User user) {
-        Start.getInstance().getJda().getTextChannelById(channelID).sendMessage(new MessageBuilder("Dieses Kommando wurde nicht gefunden!").build()).queue();
+    public void printCommandNotFoundMessage (Member commandSender, TextChannel textChannel) {
+        EmbedBuilder builder = new EmbedBuilder();
+        builder.setAuthor("CoPilot");
+        builder.setThumbnail("https://raw.githubusercontent.com/swausb/CoPilot/master/images/CoPilot.jpg");
+        builder.setColor(Color.red);
+        builder.setTitle("Fehler [ERROR 001]");
+        builder.setDescription("Dieser Command wurde nicht gefunden!");
+        builder.setFooter("CoPilot-Bot - Copyright © swausb");
+        textChannel.sendMessage(builder.build()).queue(exitMessage -> exitMessage.addReaction("❌").queue());
+    }
+    public void printErrorPlayCommand (Member commandSender, TextChannel textChannel) {
+        EmbedBuilder builder = new EmbedBuilder();
+        builder.setAuthor("CoPilot - " + commandSender.getEffectiveName());
+        builder.setThumbnail("https://raw.githubusercontent.com/swausb/CoPilot/master/images/CoPilot.jpg");
+        builder.setColor(Color.red);
+        builder.setTitle("Fehler [ERROR 002]");
+        builder.setDescription("Bitte benutze .play (Songlink) wenn du Musik abspielen möchtest!");
+        builder.setFooter("CoPilot-Bot - Copyright © swausb");
+        textChannel.sendMessage(builder.build()).queue(exitMessage -> exitMessage.addReaction("❌").queue());
+    }
+    public void printErrorVoiceChannel (Member commandSender, TextChannel textChannel) {
+        EmbedBuilder builder = new EmbedBuilder();
+        builder.setAuthor("CoPilot - " + commandSender.getEffectiveName());
+        builder.setThumbnail("https://raw.githubusercontent.com/swausb/CoPilot/master/images/CoPilot.jpg");
+        builder.setColor(Color.red);
+        builder.setTitle("Fehler [ERROR 003]");
+        builder.setDescription("Huch, du bist wohl in keinem Voicechannel!");
+        builder.setFooter("CoPilot-Bot - Copyright © swausb");
+        textChannel.sendMessage(builder.build()).queue(exitMessage -> exitMessage.addReaction("❌").queue());
     }
 }

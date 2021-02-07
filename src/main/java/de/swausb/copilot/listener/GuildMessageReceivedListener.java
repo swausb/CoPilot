@@ -2,6 +2,7 @@ package de.swausb.copilot.listener;
 
 import de.swausb.copilot.ICommand;
 import de.swausb.copilot.Start;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
@@ -47,9 +48,9 @@ public class GuildMessageReceivedListener extends ListenerAdapter {
 
                 //Wir rufen die Methode onCommand von ICommand.java auf, die quasi dann ausgeführt wird, wenn ein User das Kommando im Textkanal eingegeben hat
 
-                iCommand.onCommand(event.getMember(), txtChannel, arguments);
+                iCommand.onCommand(event.getMember(), txtChannel, message, arguments);
             } else {
-                Start.getInstance().getMessageManager().printCommandNotFoundMessage(txtChannel.getId(), user);
+                Start.getInstance().getMessageManager().printCommandNotFoundMessage(event.getMember(), txtChannel);
             }
         }
     }
