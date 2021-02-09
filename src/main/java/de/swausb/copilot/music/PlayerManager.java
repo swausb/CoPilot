@@ -23,4 +23,12 @@ public class PlayerManager {
 
         return mc;
     }
+    public long getGuildByPlayerHash(int hash) {
+        for(MusicController controller : this.controller.values()) {
+            if(controller.getPlayer().hashCode() == hash) {
+                return controller.getGuild().getIdLong();
+            }
+        }
+        return -1;
+    }
 }

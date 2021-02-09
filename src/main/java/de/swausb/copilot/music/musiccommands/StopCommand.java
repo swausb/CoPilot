@@ -1,4 +1,4 @@
-package de.swausb.copilot.music.commands;
+package de.swausb.copilot.music.musiccommands;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import de.swausb.copilot.ICommand;

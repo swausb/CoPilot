@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 
 import javax.security.auth.login.LoginException;
 
-import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
@@ -17,19 +16,24 @@ import de.swausb.copilot.listener.GuildMessageReceivedListener;
 import de.swausb.copilot.manager.CommandManager;
 import de.swausb.copilot.manager.MessageManager;
 import de.swausb.copilot.music.PlayerManager;
-import de.swausb.copilot.music.commands.PlayCommand;
-import de.swausb.copilot.music.commands.StopCommand;
+import de.swausb.copilot.music.musiccommands.PlayCommand;
+import de.swausb.copilot.music.musiccommands.StopCommand;
 import de.swausb.copilot.utils.Property;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.managers.AudioManager;
 import net.dv8tion.jda.api.requests.GatewayIntent;
+import net.dv8tion.jda.api.sharding.ShardManager;
 import net.dv8tion.jda.api.utils.Compression;
 
 public class Start {
+    public static Start INSTANCE;
+    public ShardManager shardMan;
+    private CommandManager cmdMan;
+    private Thread loop;
+
     private MessageManager messageManager;
     private static Start instance;
     public static JDA jda;
