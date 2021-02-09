@@ -2,16 +2,12 @@ package de.swausb.copilot.listener;
 
 import de.swausb.copilot.ICommand;
 import de.swausb.copilot.Start;
-import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class GuildMessageReceivedListener extends ListenerAdapter {
 

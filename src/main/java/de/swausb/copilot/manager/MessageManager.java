@@ -93,11 +93,23 @@ public class MessageManager {
         EmbedBuilder builder = new EmbedBuilder();
         builder.setAuthor("Copilot - " +  commandSender.getEffectiveName());
         builder.setTitle("CoPilot Song");
+        builder.setColor(Color.red);
         builder.setThumbnail("https://raw.githubusercontent.com/swausb/CoPilot/master/images/CoPilot.jpg");
         builder.setDescription("Viel Spaß mit dem besten Song aller Zeiten! <3");
         builder.setFooter("CoPilot-Bot - Copyright © swausb");
         textChannel.sendMessage(builder.build()).queue(exitMessage -> exitMessage.addReaction("U+1F60D").queue());
         textChannel.addReactionById(textChannel.getLatestMessageId(), "U+1F3B6");
+    }
+
+    public void printBotErrorVoiceChannel (Member commandSender, TextChannel textChannel) {
+        EmbedBuilder builder = new EmbedBuilder();
+        builder.setAuthor("Copilot - " +  commandSender.getEffectiveName());
+        builder.setTitle("Fehler [Error 005]");
+        builder.setColor(Color.red);
+        builder.setThumbnail("https://raw.githubusercontent.com/swausb/CoPilot/master/images/CoPilot.jpg");
+        builder.setDescription("Der Bot ist aktuell in keinem Voicechannel!");
+        builder.setFooter("CoPilot-Bot - Copyright © swausb");
+        textChannel.sendMessage(builder.build()).queue(exitMessage -> exitMessage.addReaction("❌").queue());
     }
 }
 

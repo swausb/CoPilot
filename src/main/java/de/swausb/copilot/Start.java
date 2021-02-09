@@ -12,6 +12,7 @@ import de.swausb.copilot.manager.CommandManager;
 import de.swausb.copilot.manager.MessageManager;
 import de.swausb.copilot.music.PlayerManager;
 import de.swausb.copilot.music.musiccommands.CopilotCommand;
+import de.swausb.copilot.music.musiccommands.LeaveCommand;
 import de.swausb.copilot.music.musiccommands.PlayCommand;
 import de.swausb.copilot.music.musiccommands.StopCommand;
 import de.swausb.copilot.utils.Property;
@@ -83,9 +84,14 @@ public class Start {
         audioPlayerManager.getConfiguration().setFilterHotSwapEnabled(true);
 
         commandManager.registerCommand(new PlayCommand("play", "play <Songlink>", "Plays a given song from youtube or spotify", "First-Officer"));
+        commandManager.registerCommand(new PlayCommand("p", "play <Songlink>", "Plays a given song from youtube or spotify", "First-Officer"));
         commandManager.registerCommand(new StopCommand("stop", "stop Song", "stops a playing song", "First-Officer"));
         commandManager.registerCommand(new HelpCommand("help", "help bot", "gives you help", "First-Officer"));
         commandManager.registerCommand(new CopilotCommand("copilot", "CoPilot song", "plays the copilot song", "First-Officer"));
+        commandManager.registerCommand(new LeaveCommand("leave", "bot leave", "make bot leave vc", "First-Officer"));
+
+
+
 
         Scanner scanner = new Scanner(System.in);
         if (scanner.nextLine().equalsIgnoreCase("stop")) {
