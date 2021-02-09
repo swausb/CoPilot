@@ -35,7 +35,7 @@ public class StopCommand extends ICommand {
                         AudioPlayer player = controller.getPlayer();
 
                         player.stopTrack();
-                        message.addReaction("U+1F44C").queue();
+                        message.addReaction("U+23F8").queue();
                     } else {
                         Start.getInstance().getMessageManager().printErrorStopCommand(commandSender, textChannel);
                     }

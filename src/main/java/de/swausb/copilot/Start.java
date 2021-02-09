@@ -1,14 +1,9 @@
 package de.swausb.copilot;
 
-import java.util.Arrays;
-import java.util.Scanner;
-import java.util.stream.Collectors;
-
-import javax.security.auth.login.LoginException;
-
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
+import de.swausb.copilot.commands.HelpCommand;
 import de.swausb.copilot.listener.GuildMemberJoinListener;
 import de.swausb.copilot.listener.GuildMemberLeaveListener;
 import de.swausb.copilot.listener.GuildMessageReactionAddListener;
@@ -16,6 +11,7 @@ import de.swausb.copilot.listener.GuildMessageReceivedListener;
 import de.swausb.copilot.manager.CommandManager;
 import de.swausb.copilot.manager.MessageManager;
 import de.swausb.copilot.music.PlayerManager;
+import de.swausb.copilot.music.musiccommands.CopilotCommand;
 import de.swausb.copilot.music.musiccommands.PlayCommand;
 import de.swausb.copilot.music.musiccommands.StopCommand;
 import de.swausb.copilot.utils.Property;
@@ -27,6 +23,11 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.sharding.ShardManager;
 import net.dv8tion.jda.api.utils.Compression;
+
+import javax.security.auth.login.LoginException;
+import java.util.Arrays;
+import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Start {
     public static Start INSTANCE;
@@ -83,6 +84,8 @@ public class Start {
 
         commandManager.registerCommand(new PlayCommand("play", "play <Songlink>", "Plays a given song from youtube or spotify", "First-Officer"));
         commandManager.registerCommand(new StopCommand("stop", "stop Song", "stops a playing song", "First-Officer"));
+        commandManager.registerCommand(new HelpCommand("help", "help bot", "gives you help", "First-Officer"));
+        commandManager.registerCommand(new CopilotCommand("copilot", "CoPilot song", "plays the copilot song", "First-Officer"));
 
         Scanner scanner = new Scanner(System.in);
         if (scanner.nextLine().equalsIgnoreCase("stop")) {

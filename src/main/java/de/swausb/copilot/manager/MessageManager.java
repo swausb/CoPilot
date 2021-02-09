@@ -75,4 +75,29 @@ public class MessageManager {
         builder.setFooter("CoPilot-Bot - Copyright © swausb");
         textChannel.sendMessage(builder.build()).queue(exitMessage -> exitMessage.addReaction("❌").queue());
     }
+
+    public void printHelpCommand(Member commandSender, TextChannel textChannel) {
+        EmbedBuilder builder = new EmbedBuilder();
+        builder.setAuthor("CoPilot - " + commandSender.getEffectiveName());
+        builder.setTitle("Help Command");
+        builder.setColor(Color.red);
+        builder.setDescription("Hier gibt es eine Übersicht aller Bot-Befehle!");
+        builder.addField("Error Commands", "[001] = Command nicht gefunden", true);
+        builder.addField("","[002] = Command nicht vollständig",  false);
+        builder.addField("", "[003] = Voicechannel Fehler", false);
+        builder.setFooter("CoPilot-Bot - Copyright © swausb");
+        textChannel.sendMessage(builder.build()).queue(exitMessage -> exitMessage.addReaction("U+2753").queue());
+    }
+
+    public void printCoPilotSong (Member commandSender, TextChannel textChannel) {
+        EmbedBuilder builder = new EmbedBuilder();
+        builder.setAuthor("Copilot - " +  commandSender.getEffectiveName());
+        builder.setTitle("CoPilot Song");
+        builder.setThumbnail("https://raw.githubusercontent.com/swausb/CoPilot/master/images/CoPilot.jpg");
+        builder.setDescription("Viel Spaß mit dem besten Song aller Zeiten! <3");
+        builder.setFooter("CoPilot-Bot - Copyright © swausb");
+        textChannel.sendMessage(builder.build()).queue(exitMessage -> exitMessage.addReaction("U+1F60D").queue());
+        textChannel.addReactionById(textChannel.getLatestMessageId(), "U+1F3B6");
+    }
 }
+
