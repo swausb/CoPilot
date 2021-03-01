@@ -1,6 +1,6 @@
 package de.swausb.copilot.manager;
 
-import de.swausb.copilot.ICommand;
+import de.swausb.copilot.utils.ICommand;
 
 import java.util.ArrayList;
 import java.util.List;

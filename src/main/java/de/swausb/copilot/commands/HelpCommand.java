@@ -1,6 +1,6 @@
 package de.swausb.copilot.commands;
 
-import de.swausb.copilot.ICommand;
+import de.swausb.copilot.utils.ICommand;
 import de.swausb.copilot.Start;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;

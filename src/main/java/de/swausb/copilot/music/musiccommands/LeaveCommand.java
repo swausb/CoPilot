@@ -2,7 +2,7 @@ package de.swausb.copilot.music.musiccommands;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
-import de.swausb.copilot.ICommand;
+import de.swausb.copilot.utils.ICommand;
 import de.swausb.copilot.Start;
 import de.swausb.copilot.music.MusicController;
 import net.dv8tion.jda.api.entities.*;

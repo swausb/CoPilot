@@ -5,7 +5,7 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
-import de.swausb.copilot.ICommand;
+import de.swausb.copilot.utils.ICommand;
 import de.swausb.copilot.Start;
 import de.swausb.copilot.music.AudioLoadResult;
 import de.swausb.copilot.music.MusicController;

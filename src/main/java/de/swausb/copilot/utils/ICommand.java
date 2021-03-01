@@ -1,4 +1,4 @@
-package de.swausb.copilot;
+package de.swausb.copilot.utils;
 
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
